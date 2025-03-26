@@ -1,12 +1,5 @@
 @extends('website.base')
 @section('main')
-<body class="bg-lime-100">
-    <div class="min-h-screen flex flex-col items-center justify-center space-y-16">
-        <!-- Header -->
-        <section id="home" class="w-full bg-white p-10 rounded-2xl shadow-lg text-center mb-16">
-            <h1 class="text-5xl font-bold text-lime-600">Aulas de Português com Simone</h1>
-            <p class="text-gray-700 mt-4 text-xl">Aprenda português de forma simples e eficaz com uma professora experiente!</p>
-        </section>
 
         <!-- About & Photo Section -->
         <section id="about" class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
@@ -57,11 +50,25 @@
         <!-- Booking & Payment Section -->
         <section id="booking" class="w-full bg-white rounded-2xl shadow-lg p-10 text-center mt-16 mb-16">
             <h2 class="text-3xl font-bold mb-4 text-lime-600">Marcar uma Aula</h2>
-            <p class="text-gray-700 text-lg mb-6">Escolha a data, horário e realize o pagamento para garantir sua aula.</p>
-            <div class="py-8 text-gray-500">
-                Funcionalidade de marcação e pagamento será implementada em breve.
+            <p class="text-gray-700 text-lg mb-6">
+                Escolha um tipo de aula e veja os pacotes disponíveis.
+            </p>
+        
+            <!-- Centered Grid with Responsive Adjustments -->
+            <div class="flex justify-center">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-5xl">
+                    @foreach ($types as $type)
+                        <a href="{{ route('packages.index', ['typeId' => $type->id]) }}" 
+                           class="flex items-center justify-center bg-lime-500 text-white text-xl font-semibold py-6 px-4 
+                                  rounded-lg shadow-lg hover:bg-lime-600 transition duration-300 text-center">
+                            {{ $type->name }}
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </section>
+        
+
 
         <!-- Contact Section -->
         <section id="contact" class="w-full bg-white rounded-2xl shadow-lg p-10 mb-0 text-center">
@@ -72,6 +79,5 @@
                 <p>Telefone: <a href="tel:+5511999999999" class="text-lime-600 hover:underline">(11) 99999-9999</a></p>
             </div>
         </section>
-    </div>
-</body>
+
 @endsection()
