@@ -4,7 +4,7 @@
         <!-- About & Photo Section -->
         <section id="about" class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
             <div class="flex justify-center">
-                <img src="https://artlogic-res.cloudinary.com/w_650,c_limit,f_auto,fl_lossy,q_auto/ws-artlogicwebsite0907/usr/images/artists/group_images_override/items/b4/b4dc5b571eee4154b87bf757f9b50e13/break-away.jpg" alt="Simone's photo" class="object-cover rounded-2xl shadow-lg w-96 h-96 transition-transform duration-500 hover:scale-105">
+                <img src="{{ asset('FotoSimone.jpg')}}">
             </div>
             <div class="bg-white rounded-2xl shadow-lg p-10">
                 <h2 class="text-3xl font-bold mb-4 text-lime-600">Sobre a Professora</h2>

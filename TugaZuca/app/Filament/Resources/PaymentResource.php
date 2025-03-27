@@ -2,42 +2,40 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TypeResource\Pages;
-use App\Filament\Resources\TypeResource\RelationManagers;
-use App\Models\Type;
+use App\Filament\Resources\PaymentResource\Pages;
+use App\Filament\Resources\PaymentResource\RelationManagers;
+use App\Models\Payment;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TypeResource extends Resource
+class PaymentResource extends Resource
 {
-    protected static ?string $model = Type::class;
+    protected static ?string $model = Payment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
-
-    protected static ?string $navigationGroup = 'Produtos';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-euro';
+    protected static ?string $navigationGroup = 'Pagamentos';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sessions_per_month')
+                Forms\Components\TextInput::make('booking_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('price')
+                Forms\Components\TextInput::make('stripe_session_id')
                     ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('amount')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('status')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -45,16 +43,16 @@ class TypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('sessions_per_month')
+                Tables\Columns\TextColumn::make('booking_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->money()
+                Tables\Columns\TextColumn::make('stripe_session_id')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('amount')
+                    ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -73,7 +71,6 @@ class TypeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -94,9 +91,9 @@ class TypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTypes::route('/'),
-            'create' => Pages\CreateType::route('/create'),
-            'edit' => Pages\EditType::route('/{record}/edit'),
+            'index' => Pages\ListPayments::route('/'),
+            'create' => Pages\CreatePayment::route('/create'),
+            'edit' => Pages\EditPayment::route('/{record}/edit'),
         ];
     }
 

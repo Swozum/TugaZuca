@@ -19,12 +19,12 @@ class PaymentController extends Controller
         
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $session = Session::create([
-            'payment_method_types' => ['card'],
+            'payment_method_types' => ['card','paypal'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'usd',
+                    'currency' => 'eur',
                     'product_data' => ['name' => 'Class Booking'],
-                    'unit_amount' => $booking->package->price * 100,
+                    'unit_amount' => $booking->type->price * 100,
                 ],
                 'quantity' => 1,
             ]],
@@ -36,7 +36,7 @@ class PaymentController extends Controller
         Payment::create([
             'booking_id' => $booking->id,
             'stripe_session_id' => $session->id,
-            'amount' => $booking->package->price,
+            'amount' => $booking->type->price,
             'status' => 'pending',
         ]);
 
