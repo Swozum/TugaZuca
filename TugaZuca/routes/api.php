@@ -34,3 +34,4 @@ Route::get('/payment-success', function () {
 Route::get('/payment-cancelled', function () {
     return response()->json(['message' => 'Payment cancelled']);
 });
+Route::post('/stripe/webhook', [PaymentController::class, 'handleWebhook']);
